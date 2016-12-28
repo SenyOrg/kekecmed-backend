@@ -75,7 +75,6 @@ export default (rootRouter, database) => {
         ctx.body = await create(model, ctx.request.body);
 
         if (ctx.request.body.references) {
-            console.log("asd");
             await ctx.request.body.references.forEach((v) => {
                 create(database.TaskReference, {
                     taskId: ctx.body.id,

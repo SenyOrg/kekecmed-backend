@@ -45,7 +45,6 @@ export async function findById(model, id, attributes, relations) {
         include: (relations) ? [{all: true}] : null
     });
 
-    console.log(modelInstance);
     if (!modelInstance) {
         throw new InvalidId(id);
     }
