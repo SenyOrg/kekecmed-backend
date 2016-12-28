@@ -102,6 +102,21 @@ module.exports = function (sequelize, DataTypes) {
                     foreignKey: 'userId',
                     constraints: false
                 });
+
+                // Calendars
+                models.User.hasMany(models.Calendar, {
+                    as: 'calendars',
+                    foreignKey: 'creatorId'
+                });
+
+                // Participating events
+                models.User.belongsToMany(models.Event, {
+                    as: 'events',
+                    through: {
+                        model: models.EventParticipant,
+                    },
+                    foreignKey: 'participantId',
+                });
             }
         }
     });
