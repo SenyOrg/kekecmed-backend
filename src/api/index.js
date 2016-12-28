@@ -20,7 +20,7 @@ const rootRouter = new Router({
 });
 
 // Setup error middleware
-rootRouter.use(async (ctx, next) => {
+rootRouter.use(async(ctx, next) => {
     try {
         await next();
     } catch (err) {
@@ -41,7 +41,7 @@ rootRouter.use(async (ctx, next) => {
                         if (v.value.type === 'ValidationError') {
                             error.property = v.path;
                         } else {
-                            error.path = v.path;
+                            error.path       = v.path;
                             error.properties = v.value.properties;
                         }
                     } else {
@@ -54,14 +54,14 @@ rootRouter.use(async (ctx, next) => {
 
             ctx.status = 400;
         } else if (err.name === 'SequelizeDatabaseError') {
-          ctx.body = {
-              error: 'DatabaseError',
-              message: err.parent.toString(),
-              detailed: err.parent,
-              code: 5000
-          }
+            ctx.body = {
+                error: 'DatabaseError',
+                message: err.parent.toString(),
+                detailed: err.parent,
+                code: 5000
+            }
 
-          ctx.status = 400;
+            ctx.status = 400;
         } else {
             ctx.body = {
                 error: err.name,

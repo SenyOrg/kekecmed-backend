@@ -1,14 +1,13 @@
-
 /**
  * QueryParameter
  *
  * @author Selcuk Kekec <skekec@kekecmed.com>
  */
 class QueryParameter {
-    name = 'QueryParameter';
+    name    = 'QueryParameter';
     message = '';
-    code = 1001;
-    status = 400;
+    code    = 1001;
+    status  = 400;
 
     /**
      * Constructor

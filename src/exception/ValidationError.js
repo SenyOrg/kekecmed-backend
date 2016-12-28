@@ -1,4 +1,3 @@
-
 /**
  * ValidationError
  *
@@ -7,11 +6,11 @@
 class ValidationError {
 
     errorMessage = '';
-    status = 400;
-    name = 'ValidationErrorException';
-    message = 'Validation failed: ';
-    code = 1000;
-    type = 'ValidationError';
+    status       = 400;
+    name         = 'ValidationErrorException';
+    message      = 'Validation failed: ';
+    code         = 1000;
+    type         = 'ValidationError';
 
     /**
      * Constructor
@@ -20,7 +19,7 @@ class ValidationError {
      */
     constructor(errorMessage) {
         this.errorMessage = errorMessage;
-        this.message = `${this.message} - ${this.errorMessage}`
+        this.message      = `${this.message} - ${this.errorMessage}`
     }
 
     /**

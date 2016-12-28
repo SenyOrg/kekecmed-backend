@@ -1,6 +1,6 @@
 import Router from 'koa-router';
 import {findAll, findById, create, destroy, update} from '../../util/blueprints';
-import cleanQueryString from '../../middleware/cleanQueryString'
+import cleanQueryString from '../../middleware/cleanQueryString';
 import InvalidId from '../../exception/InvalidId';
 
 /**
@@ -42,12 +42,14 @@ export default (rootRouter, database) => {
      * @queryParam offset
      * @queryParam relations
      */
-    router.get('/',
-        cleanQueryString,
-        async (ctx) => {
-            ctx.body = await findAll(model, ctx.query.attributes, ctx.query.order, ctx.query.limit, ctx.query.offset, ctx.query.relations)
-        }
-    );
+    router.get('/', cleanQueryString, async(ctx) => {
+        ctx.body = await findAll(model,
+            ctx.query.attributes,
+            ctx.query.order,
+            ctx.query.limit,
+            ctx.query.offset,
+            ctx.query.relations)
+    });
 
     /**
      * Route: /:id
@@ -56,42 +58,41 @@ export default (rootRouter, database) => {
      * @queryParam attributes
      * @queryParam relations
      */
-    router.get('/:id',
-        cleanQueryString,
-        async (ctx) => {
-            if (ctx.params.id > 0) {
-                const modelInstance = await findById(model, ctx.params.id, ctx.query.attributes, ctx.query.relations);
+    router.get('/:id', cleanQueryString, async(ctx) => {
+        if (ctx.params.id > 0) {
+            const modelInstance = await findById(model, ctx.params.id, ctx.query.attributes, ctx.query.relations);
 
-                if (modelInstance) {
-                    const data = modelInstance.get({plain:true});
+            if (modelInstance) {
+                const data = modelInstance.get({plain: true});
 
-                    // @todo :: Can we use virtual fields here instead of doing that manually?
-                    if (modelInstance.users || modelInstance.patients)
-                        data.references = [...modelInstance.users, ...modelInstance.patients]
-
-                    ctx.body = data;
-                } else {
-                    throw new InvalidId(ctx.params.id);
+                // @todo :: Can we use virtual fields here instead of doing that manually?
+                if (modelInstance.users || modelInstance.patients) {
+                    data.references = [...modelInstance.users, ...modelInstance.patients]
                 }
+
+                ctx.body = data;
             } else {
                 throw new InvalidId(ctx.params.id);
             }
+        } else {
+            throw new InvalidId(ctx.params.id);
         }
-    );
+    });
 
     /**
      * Route: /:id/references
      *
      * @method GET
      */
-    router.get('/:id/references', async (ctx) => {
+    router.get('/:id/references', async(ctx) => {
         let note = await findById(model, ctx.params.id, null, true);
         ctx.body = [];
 
-        note = note.get({plain:true});
+        note = note.get({plain: true});
 
-        if (note.users || note.patients)
+        if (note.users || note.patients) {
             ctx.body = [...note.users, ...note.patients];
+        }
     });
 
     /**
@@ -99,9 +100,9 @@ export default (rootRouter, database) => {
      *
      * @method POST
      */
-    router.post('/:id/references', async (ctx) => {
+    router.post('/:id/references', async(ctx) => {
         const modelInstance = await create(database.NoteReference, {
-           noteId: ctx.params.id,
+            noteId: ctx.params.id,
             objectId: ctx.request.body.objectId,
             objectType: ctx.request.body.objectType
         });
@@ -114,9 +115,9 @@ export default (rootRouter, database) => {
      *
      * @method POST
      */
-    router.post('/', async (ctx) => {
+    router.post('/', async(ctx) => {
         const modelInstance = await create(model, ctx.request.body)
-        ctx.body = modelInstance;
+        ctx.body            = modelInstance;
     });
 
     /**
@@ -124,7 +125,7 @@ export default (rootRouter, database) => {
      *
      * @method DELETE
      */
-    router.del('/:id', async (ctx) => {
+    router.del('/:id', async(ctx) => {
         if (ctx.params.id > 0) {
             ctx.body = await destroy(model, ctx.params.id);
         } else {
@@ -137,16 +138,19 @@ export default (rootRouter, database) => {
      *
      * @method PUT
      */
-    router.put('/:id', async (ctx) => {
+    router.put('/:id', async(ctx) => {
         if (ctx.params.id > 0) {
             ctx.body = await update(model, ctx.params.id, ctx.request.body);
 
             if (ctx.request.body.references) {
                 await database.sequelize.query('DELETE FROM `NoteReferences` WHERE `noteId` = :id',
-                    { replacements: { id: ctx.params.id }, type: database.sequelize.QueryTypes.DELETE });
+                    {
+                        replacements: {id: ctx.params.id},
+                        type: database.sequelize.QueryTypes.DELETE
+                    });
 
                 await ctx.request.body.references.forEach((v) => {
-                    if ( database[v.objectType] ) {
+                    if (database[v.objectType]) {
                         database[v.objectType].findById(v.objectId).then((modelInstance) => {
                             if (modelInstance) {
                                 database.NoteReference.create({
@@ -167,9 +171,5 @@ export default (rootRouter, database) => {
     });
 
     // Inject router
-    rootRouter.use(
-        routerPath,
-        router.routes(),
-        router.allowedMethods()
-    );
+    rootRouter.use(routerPath, router.routes(), router.allowedMethods());
 }

@@ -1,6 +1,6 @@
 import Router from 'koa-router';
 import {findAll, findById, create, destroy, update} from '../../util/blueprints';
-import cleanQueryString from '../../middleware/cleanQueryString'
+import cleanQueryString from '../../middleware/cleanQueryString';
 import InvalidId from '../../exception/InvalidId';
 
 /**
@@ -42,12 +42,14 @@ export default (rootRouter, database) => {
      * @queryParam offset
      * @queryParam relations
      */
-    router.get('/',
-        cleanQueryString,
-        async (ctx) => {
-            ctx.body = await findAll(model, ctx.query.attributes, ctx.query.order, ctx.query.limit, ctx.query.offset, ctx.query.relations)
-        }
-    );
+    router.get('/', cleanQueryString, async(ctx) => {
+        ctx.body = await findAll(model,
+            ctx.query.attributes,
+            ctx.query.order,
+            ctx.query.limit,
+            ctx.query.offset,
+            ctx.query.relations)
+    });
 
     /**
      * Route: /:id
@@ -56,16 +58,13 @@ export default (rootRouter, database) => {
      * @queryParam attributes
      * @queryParam relations
      */
-    router.get('/:id',
-        cleanQueryString,
-        async (ctx) => {
-            if (ctx.params.id > 0) {
-                ctx.body = await findById(model, ctx.params.id, ctx.query.attributes, ctx.query.relations);
-            } else {
-                throw new InvalidId(ctx.params.id);
-            }
+    router.get('/:id', cleanQueryString, async(ctx) => {
+        if (ctx.params.id > 0) {
+            ctx.body = await findById(model, ctx.params.id, ctx.query.attributes, ctx.query.relations);
+        } else {
+            throw new InvalidId(ctx.params.id);
         }
-    );
+    });
 
     /**
      * Route: /:id/notes
@@ -74,20 +73,17 @@ export default (rootRouter, database) => {
      * @queryParam attributes
      * @queryParam relations
      */
-    router.get('/:id/notes',
-        cleanQueryString,
-        async (ctx) => {
-            if (ctx.params.id > 0) {
-                ctx.body = await findById(model, ctx.params.id, ctx.query.attributes, ctx.query.relations);
+    router.get('/:id/notes', cleanQueryString, async(ctx) => {
+        if (ctx.params.id > 0) {
+            ctx.body = await findById(model, ctx.params.id, ctx.query.attributes, ctx.query.relations);
 
-                if (ctx.body) {
-                    ctx.body = ctx.body.notes;
-                }
-            } else {
-                throw new InvalidId(ctx.params.id);
+            if (ctx.body) {
+                ctx.body = ctx.body.notes;
             }
+        } else {
+            throw new InvalidId(ctx.params.id);
         }
-    );
+    });
 
     /**
      * Route: /:id/notes
@@ -96,31 +92,29 @@ export default (rootRouter, database) => {
      * @queryParam attributes
      * @queryParam relations
      */
-    router.post('/:id/notes',
-        async (ctx) => {
-            if (ctx.params.id > 0) {
-                const note = await create(database.Note, ctx.request.body);
+    router.post('/:id/notes', async(ctx) => {
+        if (ctx.params.id > 0) {
+            const note = await create(database.Note, ctx.request.body);
 
-                await create(database.NoteReference, {
-                    noteId: note.id,
-                    objectId: ctx.params.id,
-                    objectType: 'User'
-                });
+            await create(database.NoteReference, {
+                noteId: note.id,
+                objectId: ctx.params.id,
+                objectType: 'User'
+            });
 
-                const user = await findById(model, ctx.params.id, null, true);
-                ctx.body = user.notes;
-            } else {
-                throw new InvalidId(ctx.params.id);
-            }
+            const user = await findById(model, ctx.params.id, null, true);
+            ctx.body   = user.notes;
+        } else {
+            throw new InvalidId(ctx.params.id);
         }
-    );
+    });
 
     /**
      * Route: /
      *
      * @method POST
      */
-    router.post('/', async (ctx) => {
+    router.post('/', async(ctx) => {
         ctx.body = await create(model, ctx.request.body)
     });
 
@@ -129,7 +123,7 @@ export default (rootRouter, database) => {
      *
      * @method DELETE
      */
-    router.del('/:id', async (ctx) => {
+    router.del('/:id', async(ctx) => {
         if (ctx.params.id > 0) {
             ctx.body = await destroy(model, ctx.params.id);
         } else {
@@ -142,7 +136,7 @@ export default (rootRouter, database) => {
      *
      * @method PUT
      */
-    router.put('/:id', async (ctx) => {
+    router.put('/:id', async(ctx) => {
         if (ctx.params.id > 0) {
             ctx.body = await update(model, ctx.params.id, ctx.request.body);
         } else {
@@ -151,9 +145,5 @@ export default (rootRouter, database) => {
     });
 
     // Inject router
-    rootRouter.use(
-        routerPath,
-        router.routes(),
-        router.allowedMethods()
-    );
+    rootRouter.use(routerPath, router.routes(), router.allowedMethods());
 }

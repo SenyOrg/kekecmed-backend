@@ -25,7 +25,7 @@ export async function findAll(model, attributes, order, limit, offset, relations
         order: order,
         limit: limit,
         offset: offset,
-        include: (relations) ? [{ all: true }] : null
+        include: (relations) ? [{all: true}] : null
     });
 }
 
@@ -40,9 +40,9 @@ export async function findAll(model, attributes, order, limit, offset, relations
  * @returns {*}
  */
 export async function findById(model, id, attributes, relations) {
-    const modelInstance =  await model.findById(id, {
-       attributes: attributes,
-       include: (relations) ? [{ all: true }] : null
+    const modelInstance = await model.findById(id, {
+        attributes: attributes,
+        include: (relations) ? [{all: true}] : null
     });
 
     console.log(modelInstance);

@@ -1,4 +1,3 @@
-
 /**
  * LogicalError
  *
@@ -7,12 +6,12 @@
 class LogicalError {
 
     errorMessage = '';
-    status = 400;
-    name = 'LogicalErrorException';
-    message = 'Validation failed: ';
-    code = 1001;
-    type = 'LogicalError';
-    properties = [];
+    status       = 400;
+    name         = 'LogicalErrorException';
+    message      = 'Validation failed: ';
+    code         = 1001;
+    type         = 'LogicalError';
+    properties   = [];
 
     /**
      * Constructor
@@ -20,9 +19,9 @@ class LogicalError {
      * @param id
      */
     constructor(errorMessage, properties) {
-        this.properties = properties;
+        this.properties   = properties;
         this.errorMessage = errorMessage;
-        this.message = `${this.message} - ${this.errorMessage}`
+        this.message      = `${this.message} - ${this.errorMessage}`
     }
 
     /**

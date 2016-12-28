@@ -1,4 +1,3 @@
-
 /**
  * InvalidId
  *
@@ -6,11 +5,11 @@
  */
 class InvalidId {
 
-    id = 0;
-    status = 400;
-    name = 'InvalidIdException';
+    id      = 0;
+    status  = 400;
+    name    = 'InvalidIdException';
     message = 'Unable to find a corresponding entity for the given id';
-    code = 1000;
+    code    = 1000;
 
     /**
      * Constructor

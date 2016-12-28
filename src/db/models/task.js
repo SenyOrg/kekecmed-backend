@@ -24,20 +24,16 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 // Creator
-                models.Task.belongsTo(models.User,
-                    {
-                        as: 'creator',
-                        foreignKey: 'creatorId'
-                    }
-                );
+                models.Task.belongsTo(models.User, {
+                    as: 'creator',
+                    foreignKey: 'creatorId'
+                });
 
                 // Status
-                models.Task.belongsTo(models.TaskStatus,
-                    {
-                        as: 'status',
-                        foreignKey: 'statusId'
-                    }
-                );
+                models.Task.belongsTo(models.TaskStatus, {
+                    as: 'status',
+                    foreignKey: 'statusId'
+                });
 
                 // Assigness
                 models.Task.belongsToMany(models.User, {

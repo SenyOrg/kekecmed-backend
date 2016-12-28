@@ -27,8 +27,7 @@ module.exports = function (sequelize, DataTypes) {
         scopes: {
             type: DataTypes.STRING
         }
-    },
-    {
+    }, {
         classMethods: {
             associate: function (models) {
                 // Creator
