@@ -9,7 +9,7 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 // Participants
-                models.Chat.hasMany(models.User, {
+                models.Chat.belongsToMany(models.User, {
                     as: 'participants',
                     foreignKey: 'chatId',
                     through: {

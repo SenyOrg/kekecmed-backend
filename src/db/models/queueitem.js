@@ -2,24 +2,24 @@
 module.exports = function (sequelize, DataTypes) {
     var QueueItem = sequelize.define('QueueItem', {
         eventId: {
-            type: sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         patientId: {
-            type: sequelize.INTEGER,
+            type: DataTypes.INTEGER,
         },
         queueId: {
-            type: sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         start: {
-            type: sequelize.DATE,
+            type: DataTypes.DATE,
         },
         end: {
-            type: sequelize.DATE
+            type: DataTypes.DATE
         },
         status: {
-            type: sequelize.INTEGER
+            type: DataTypes.INTEGER
         }
     }, {
         classMethods: {

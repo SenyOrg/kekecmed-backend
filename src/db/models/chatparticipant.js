@@ -22,7 +22,7 @@ module.exports = function (sequelize, DataTypes) {
                     foreignKey: 'chatId',
                 });
 
-                models.ChatParticipant.belongstTo(models.User, {
+                models.ChatParticipant.belongsTo(models.User, {
                     as: 'participant',
                     foreignKey: 'participantId'
                 })
