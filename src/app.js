@@ -15,6 +15,7 @@ import Parser from 'koa-bodyparser';
 import Log from './util/logger';
 import Api from './api';
 import JSON from 'koa-json';
+import Compress from 'koa-compress';
 
 // Create Koa instance
 const app = new Koa();
@@ -28,6 +29,11 @@ app.use(RT());
 app.use(Logger());
 app.use(Parser());
 app.use(JSON());
+
+/**
+ * @todo: Compression should be enabled in production only - Implement a valid configuration management first
+ */
+//app.use(Compress());
 
 // Register routes
 app.use(Api.routes());
