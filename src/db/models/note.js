@@ -45,19 +45,6 @@ module.exports = function (sequelize, DataTypes) {
                         foreignKey: 'authorId'
                     });
 
-                    models.Note.belongsToMany(models.User, {
-                        through: {
-                            model: models.NoteReference,
-                            unique: false,
-                            scope: {
-                                objectType: 'User'
-                            }
-                        },
-                        as: 'users',
-                        foreignKey: 'noteId',
-                        constraints: false
-                    });
-
                     models.Note.belongsToMany(models.Patient, {
                         through: {
                             model: models.NoteReference,

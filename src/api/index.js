@@ -53,7 +53,7 @@ rootRouter.use(async(ctx, next) => {
             };
 
             ctx.status = 400;
-        } else if (err.name === 'SequelizeDatabaseError') {
+        } else if (err.name === 'SequelizeDatabaseError' || err.name === 'SequelizeForeignKeyConstraintError') {
             ctx.body = {
                 error: 'DatabaseError',
                 message: err.parent.toString(),

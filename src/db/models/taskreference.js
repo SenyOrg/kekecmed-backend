@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
                 models.TaskReference.belongsTo(models.Task, {
                     as: 'task',
                     foreignKey: 'taskId'
-                })
+                });
             }
         }
     });

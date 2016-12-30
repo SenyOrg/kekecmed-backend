@@ -72,22 +72,15 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 // Notes
-                models.User.belongsToMany(models.Note, {
-                    through: {
-                        model: models.NoteReference,
-                        unique: false,
-                        scope: {
-                            objectType: 'User'
-                        }
-                    },
+                models.User.hasMany(models.Note, {
                     as: 'notes',
-                    foreignKey: 'objectId',
+                    foreignKey: 'authorId',
                     constraints: false
                 });
 
                 // Tasks (created)
                 models.User.hasMany(models.Task, {
-                    as: 'tasks',
+                    as: 'createdTasks',
                     foreignKey: 'creatorId'
                 });
 

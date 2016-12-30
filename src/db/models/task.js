@@ -41,6 +41,7 @@ module.exports = function (sequelize, DataTypes) {
                         model: models.TaskAssignee,
                         unique: false,
                     },
+                    as: 'assignees',
                     foreignKey: 'taskId',
                 });
 

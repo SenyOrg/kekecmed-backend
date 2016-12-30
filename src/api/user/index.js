@@ -2,6 +2,8 @@ import Router from 'koa-router';
 import {findAll, findById, create, destroy, update} from '../../util/blueprints';
 import cleanQueryString from '../../middleware/cleanQueryString';
 import InvalidId from '../../exception/InvalidId';
+import {UserBlueprints as TaskBlueprints} from '../task/blueprints';
+import {UserBlueprints as NoteBlueprints} from '../note/blueprints';
 
 /**
  * Endpoint: User
@@ -67,49 +69,6 @@ export default (rootRouter, database) => {
     });
 
     /**
-     * Route: /:id/notes
-     *
-     * @method GET
-     * @queryParam attributes
-     * @queryParam relations
-     */
-    router.get('/:id/notes', cleanQueryString, async(ctx) => {
-        if (ctx.params.id > 0) {
-            ctx.body = await findById(model, ctx.params.id, ctx.query.attributes, ctx.query.relations);
-
-            if (ctx.body) {
-                ctx.body = ctx.body.notes;
-            }
-        } else {
-            throw new InvalidId(ctx.params.id);
-        }
-    });
-
-    /**
-     * Route: /:id/notes
-     *
-     * @method GET
-     * @queryParam attributes
-     * @queryParam relations
-     */
-    router.post('/:id/notes', async(ctx) => {
-        if (ctx.params.id > 0) {
-            const note = await create(database.Note, ctx.request.body);
-
-            await create(database.NoteReference, {
-                noteId: note.id,
-                objectId: ctx.params.id,
-                objectType: 'User'
-            });
-
-            const user = await findById(model, ctx.params.id, null, true);
-            ctx.body   = user.notes;
-        } else {
-            throw new InvalidId(ctx.params.id);
-        }
-    });
-
-    /**
      * Route: /
      *
      * @method POST
@@ -143,6 +102,12 @@ export default (rootRouter, database) => {
             throw new InvalidId(ctx.params.id);
         }
     });
+
+    // Task Blueprints
+    TaskBlueprints(router, model, database);
+
+    // Note Blueprints
+    NoteBlueprints(router, model, database);
 
     // Inject router
     rootRouter.use(routerPath, router.routes(), router.allowedMethods());
