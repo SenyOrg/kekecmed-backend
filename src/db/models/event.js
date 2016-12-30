@@ -68,6 +68,15 @@ module.exports = function (sequelize, DataTypes) {
                     as: 'patient',
                     foreignKey: 'patientId',
                 });
+
+                // Participants
+                models.Event.belongsToMany(models.User, {
+                    as: 'participants',
+                    through: {
+                        model: models.EventParticipant
+                    },
+                    foreignKey: 'eventId'
+                });
             }
         }
     });

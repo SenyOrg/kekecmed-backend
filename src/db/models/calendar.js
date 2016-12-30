@@ -35,6 +35,12 @@ module.exports = function (sequelize, DataTypes) {
                     as: 'creator',
                     foreignKey: 'creatorId'
                 });
+
+                // Events
+                models.Calendar.hasMany(models.Event, {
+                    as: 'events',
+                    foreignKey: 'calendarId'
+                });
             }
         }
     });
