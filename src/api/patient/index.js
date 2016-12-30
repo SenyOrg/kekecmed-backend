@@ -103,6 +103,40 @@ export default (rootRouter, database) => {
         }
     });
 
+    /**
+     * Route: /:id/events
+     *
+     * @method GET
+     * @queryParam attributes
+     * @queryParam relations
+     */
+    router.get('/:id/events', cleanQueryString, async(ctx) => {
+        if (ctx.params.id > 0) {
+            ctx.body = await (await findById(model, ctx.params.id, ctx.query.attributes, ctx.query.relations)).getEvents();
+
+        } else {
+            throw new InvalidId(ctx.params.id);
+        }
+    });
+
+    /**
+     * Route: /:id/events
+     *
+     * @method GET
+     * @queryParam attributes
+     * @queryParam relations
+     */
+    router.post('/:id/events', async(ctx) => {
+        if (ctx.params.id > 0) {
+            const modelInstance = await findById(model, ctx.params.id, ctx.query.attributes, ctx.query.relations);
+
+            ctx.body = await modelInstance.createEvent(ctx.request.body);
+
+        } else {
+            throw new InvalidId(ctx.params.id);
+        }
+    });
+
     // Register note routes
     NoteBlueprints(router, model, database);
 

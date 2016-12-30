@@ -101,10 +101,17 @@ module.exports = function (sequelize, DataTypes) {
                     constraints: false
                 });
 
+                // Insurance
                 models.Patient.belongsTo(models.Insurance, {
                     as: 'insurance',
                     foreignKey: 'insuranceId'
-                })
+                });
+
+                // Events
+                models.Patient.hasMany(models.Event, {
+                    as: 'events',
+                    foreignKey: 'patientId'
+                });
             }
         }
     });

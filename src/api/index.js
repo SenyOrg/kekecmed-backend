@@ -14,6 +14,7 @@ import Note from '../api/note';
 import Patient from '../api/patient';
 import Task from '../api/task';
 import Calendar from '../api/calendar';
+import Event from '../api/event';
 
 // Create root router
 const rootRouter = new Router({
@@ -81,6 +82,7 @@ Note(rootRouter, DB);
 Patient(rootRouter, DB);
 Task(rootRouter, DB);
 Calendar(rootRouter, DB);
+Event(rootRouter, DB);
 
 export default rootRouter;
 

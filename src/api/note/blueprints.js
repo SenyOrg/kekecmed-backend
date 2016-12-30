@@ -94,8 +94,6 @@ export function UserBlueprints (router, model, database) {
             // Create Note and reference it
             const note = await modelInstance.createNote(ctx.request.body)
 
-            // Create references if needed
-
             // Return created note
             ctx.body   = note;
         } else {
