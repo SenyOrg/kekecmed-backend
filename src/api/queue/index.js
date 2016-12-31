@@ -4,7 +4,7 @@ import cleanQueryString from '../../middleware/cleanQueryString';
 import InvalidId from '../../exception/InvalidId';
 
 /**
- * Endpoint: Note
+ * Endpoint: Queue
  *
  * @author
  * @param rootRouter
@@ -23,14 +23,14 @@ export default (rootRouter, database) => {
      *
      * @type sequelize.model
      */
-    const model = database.Note;
+    const model = database.Queue;
 
     /**
      * Route path
      *
      * @type {string}
      */
-    const routerPath = '/note'
+    const routerPath = '/queue'
 
     /**
      * Route: /
@@ -67,32 +67,6 @@ export default (rootRouter, database) => {
     });
 
     /**
-     * Route: /:id/references
-     *
-     * @method GET
-     */
-    router.get('/:id/references', async(ctx) => {
-        let note = await findById(model, ctx.params.id, null, true);
-
-        ctx.body = note.references;
-    });
-
-    /**
-     * Route: /:id/references
-     *
-     * @method POST
-     */
-    router.post('/:id/references', async(ctx) => {
-        const modelInstance = await create(database.NoteReference, {
-            noteId: ctx.params.id,
-            objectId: ctx.request.body.objectId,
-            objectType: ctx.request.body.objectType
-        });
-
-        ctx.body = modelInstance;
-    });
-
-    /**
      * Route: /
      *
      * @method POST
@@ -123,30 +97,6 @@ export default (rootRouter, database) => {
     router.put('/:id', async(ctx) => {
         if (ctx.params.id > 0) {
             ctx.body = await update(model, ctx.params.id, ctx.request.body);
-
-            if (ctx.request.body.references) {
-                await database.sequelize.query('DELETE FROM `NoteReferences` WHERE `noteId` = :id',
-                    {
-                        replacements: {id: ctx.params.id},
-                        type: database.sequelize.QueryTypes.DELETE
-                    });
-
-                await ctx.request.body.references.forEach((v) => {
-                    if (database[v.objectType]) {
-                        database[v.objectType].findById(v.objectId).then((modelInstance) => {
-                            if (modelInstance) {
-                                database.NoteReference.create({
-                                    noteId: ctx.params.id,
-                                    objectId: v.objectId,
-                                    objectType: v.objectType
-                                });
-                            }
-                        });
-                    } else {
-                        // @todo Provided object type is not valid ! How should we react ?
-                    }
-                });
-            }
         } else {
             throw new InvalidId(ctx.params.id);
         }

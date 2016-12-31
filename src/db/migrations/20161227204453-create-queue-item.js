@@ -9,6 +9,23 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             eventId: {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
+            patientId: {
+                type: Sequelize.INTEGER,
+            },
+            queueId: {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
+            start: {
+                type: Sequelize.DATE,
+            },
+            end: {
+                type: Sequelize.DATE
+            },
+            status: {
                 type: Sequelize.INTEGER
             },
             createdAt: {

@@ -9,7 +9,7 @@
     "nodemon": "node_modules/nodemon/bin/nodemon.js",
     "start": "node index.js",
     "migration": "sequelize db:migrate:undo:all && sequelize db:migrate",
-    "seed": "sequelize db:seed:undo:all && sequelize db:seed:all",
+    "seed": "sequelize --harmony db:seed:undo:all && sequelize --harmony db:seed:all",
     "migrateAndSeed": "npm run migration && npm run seed"
   },
   "author": "Selcuk Kekec <skekec@kekecmed.com>",

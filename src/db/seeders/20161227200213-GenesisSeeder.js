@@ -13,8 +13,6 @@ module.exports = {
          }], {});
          */
 
-        var bulkInsert = queryInterface.bulkInsert;
-
         // EventStatuses
         queryInterface.bulkInsert('EventStatuses', [{
             title: 'Geplant',
@@ -33,11 +31,20 @@ module.exports = {
             color: '',
         },]);
 
+        // Insurances
         queryInterface.bulkInsert('Insurances', [{
             title: 'BKK',
             website: 'http://www.bkk.de',
             image: null
-        }])
+        }]);
+
+        // TaskStatus
+        queryInterface.bulkInsert('TaskStatuses', [
+            {title: 'Offen', color: ''},
+            {title: 'Angenommen', color: ''},
+            {title: 'In Bearbeitung', color: ''},
+            {title: 'Abgeschlossen', color: ''},
+        ]);
 
         // EventTypes
         return queryInterface.bulkInsert('EventTypes', [{
@@ -56,7 +63,7 @@ module.exports = {
             title: 'Überweisung',
             color: '',
             description: 'Überweisung'
-        },]);
+        }]);
     },
 
     down: function (queryInterface, Sequelize) {

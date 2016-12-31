@@ -9,12 +9,13 @@
 
 import Router from 'koa-router';
 import DB from '../db/models';
-import User from '../api/user';
-import Note from '../api/note';
-import Patient from '../api/patient';
-import Task from '../api/task';
-import Calendar from '../api/calendar';
-import Event from '../api/event';
+import User from './user';
+import Note from './note';
+import Patient from './patient';
+import Task from './task';
+import Calendar from './calendar';
+import Event from './event';
+import Queue from './queue';
 
 // Create root router
 const rootRouter = new Router({
@@ -83,6 +84,7 @@ Patient(rootRouter, DB);
 Task(rootRouter, DB);
 Calendar(rootRouter, DB);
 Event(rootRouter, DB);
+Queue(rootRouter, DB);
 
 export default rootRouter;
 
