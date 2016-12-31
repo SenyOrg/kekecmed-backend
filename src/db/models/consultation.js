@@ -3,7 +3,6 @@ module.exports = function (sequelize, DataTypes) {
     var Consultation = sequelize.define('Consultation', {
         eventId: {
             type: DataTypes.INTEGER,
-            allowNull: false
         },
         patientId: {
             type: DataTypes.INTEGER,
