@@ -8,4 +8,4 @@
 var app = require('./build/app').default;
 
 // Start server on port 3000
-app.listen(3000);
+app.listen(3010);

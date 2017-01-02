@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel -w src/ -d build/",
-    "nodemon": "node_modules/nodemon/bin/nodemon.js",
+    "build": "babel src/ -d build/",
+    "build:watch": "babel -w src/ -d build/",
+    "start:watch": "node_modules/nodemon/bin/nodemon.js",
+    "start:dev": "concurrently --kill-others \"npm run build:watch\" \"npm run start:watch\"",
     "start": "node index.js",
     "migration": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "seed": "sequelize --harmony db:seed:undo:all && sequelize --harmony db:seed:all",
@@ -19,6 +21,7 @@
     "babel-plugin-lodash": "^3.2.11",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-stage-0": "^6.16.0",
+    "concurrently": "^3.1.0",
     "faker": "^3.1.0",
     "koa": "^2.0.0",
     "nodemon": "^1.11.0",
@@ -26,6 +29,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.20.0",
+    "kcors": "^1.3.1",
     "koa-bodyparser": "^3.2.0",
     "koa-compress": "^2.0.0",
     "koa-json": "^1.1.3",

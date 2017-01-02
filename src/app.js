@@ -12,6 +12,7 @@ import Koa from 'koa';
 import RT from 'koa-response-time';
 import Logger from 'koa-logger';
 import Parser from 'koa-bodyparser';
+import Cors from 'kcors';
 import Log from './util/logger';
 import Api from './api';
 import JSON from 'koa-json';
@@ -29,6 +30,7 @@ app.use(RT());
 app.use(Logger());
 app.use(Parser());
 app.use(JSON());
+app.use(Cors());
 
 /**
  * @todo: Compression should be enabled in production only - Implement a valid configuration management first
