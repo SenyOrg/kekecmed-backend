@@ -22,7 +22,9 @@ export function ReferenceBlueprints(router, model, database) {
             ctx.body = await findById(model, ctx.params.id, null, false);
 
             if (ctx.body) {
-                ctx.body = await ctx.body.getTasks();
+                ctx.body = await ctx.body.getTasks({
+                    include: ['creator', 'status']
+                });
             }
         } else {
             throw new InvalidId(ctx.params.id);
