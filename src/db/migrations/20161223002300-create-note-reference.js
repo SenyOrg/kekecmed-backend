@@ -1,6 +1,7 @@
 'use strict';
 module.exports = {
     up: function (queryInterface, Sequelize) {
+        return null;
         return queryInterface.createTable('NoteReferences', {
             id: {
                 allowNull: false,

@@ -8,9 +8,6 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            title: {
-                type: Sequelize.STRING
-            },
             body: {
                 type: Sequelize.STRING
             },
@@ -22,6 +19,12 @@ module.exports = {
                 },
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE'
+            },
+            objectId: {
+                type: Sequelize.INTEGER,
+            },
+            objectType: {
+                type: Sequelize.STRING,
             },
             createdAt: {
                 allowNull: false,

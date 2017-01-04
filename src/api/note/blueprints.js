@@ -19,10 +19,12 @@ export function ReferenceBlueprints (router, model, database) {
      */
     router.get('/:id/notes', cleanQueryString, async(ctx) => {
         if (ctx.params.id > 0) {
-            ctx.body = await findById(model, ctx.params.id, ctx.query.attributes, ctx.query.relations);
+            ctx.body = await findById(model, ctx.params.id, null, false);
 
             if (ctx.body) {
-                ctx.body = await ctx.body.getNotes();
+                ctx.body = await ctx.body.getNotes({
+                    include: ['author']
+                });
             }
         } else {
             throw new InvalidId(ctx.params.id);
@@ -39,13 +41,10 @@ export function ReferenceBlueprints (router, model, database) {
     router.post('/:id/notes', async(ctx) => {
         if (ctx.params.id > 0) {
             // Find referenced object
-            const referencedObject = await findById(model, ctx.params.id, null, true);
-
-            // Create Note and reference it
-            const note = await referencedObject.createNote(ctx.request.body)
+            const referencedObject = await findById(model, ctx.params.id, null, false);
 
             // Return created note
-            ctx.body   = note;
+            ctx.body = await referencedObject.createNote(ctx.request.body);
         } else {
             throw new InvalidId(ctx.params.id);
         }
@@ -69,7 +68,7 @@ export function UserBlueprints (router, model, database) {
      */
     router.get('/:id/notes', cleanQueryString, async(ctx) => {
         if (ctx.params.id > 0) {
-            ctx.body = await findById(model, ctx.params.id, ctx.query.attributes, ctx.query.relations);
+            ctx.body = await findById(model, ctx.params.id, null, false);
 
             if (ctx.body) {
                 ctx.body = await ctx.body.getNotes();
@@ -89,13 +88,10 @@ export function UserBlueprints (router, model, database) {
     router.post('/:id/notes', async(ctx) => {
         if (ctx.params.id > 0) {
             // Find referenced object
-            const modelInstance = await findById(model, ctx.params.id, null, true);
-
-            // Create Note and reference it
-            const note = await modelInstance.createNote(ctx.request.body)
+            const modelInstance = await findById(model, ctx.params.id, null, false);
 
             // Return created note
-            ctx.body   = note;
+            ctx.body = await modelInstance.createNote(ctx.request.body);
         } else {
             throw new InvalidId(ctx.params.id);
         }

@@ -19,7 +19,7 @@ export function ReferenceBlueprints(router, model, database) {
      */
     router.get('/:id/tasks', cleanQueryString, async(ctx) => {
         if (ctx.params.id > 0) {
-            ctx.body = await findById(model, ctx.params.id, ctx.query.attributes, ctx.query.relations);
+            ctx.body = await findById(model, ctx.params.id, null, false);
 
             if (ctx.body) {
                 ctx.body = await ctx.body.getTasks();
@@ -86,7 +86,7 @@ export function UserBlueprints(router, model, database) {
      */
     router.get('/:id/tasks', cleanQueryString, async(ctx) => {
         if (ctx.params.id > 0) {
-            ctx.body = await findById(model, ctx.params.id, ctx.query.attributes, ctx.query.relations);
+            ctx.body = await findById(model, ctx.params.id, null, false);
 
             if (ctx.body) {
                 ctx.body = {
@@ -112,7 +112,7 @@ export function UserBlueprints(router, model, database) {
             const referenceInstance = await findById(model, ctx.params.id, null, true);
 
             // Create Task
-            const task = await referenceInstance.createCreatedTask(ctx.request.body)
+            const task = await referenceInstance.createCreatedTask(ctx.request.body);
 
             // Create assignees
             if (ctx.request.body.references) {

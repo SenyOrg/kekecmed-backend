@@ -12,15 +12,18 @@ var LogicalError    = require('../../exception/LogicalError').default;
  */
 module.exports = function (sequelize, DataTypes) {
     var Note = sequelize.define('Note', {
-            title: {
-                type: DataTypes.STRING,
-            },
             body: {
                 type: DataTypes.STRING,
             },
             authorId: {
                 type: DataTypes.INTEGER,
-            }
+            },
+            objectId: {
+                type: DataTypes.INTEGER,
+            },
+            objectType: {
+                type: DataTypes.STRING,
+            },
         },
 
         /**
@@ -40,22 +43,17 @@ module.exports = function (sequelize, DataTypes) {
              */
             classMethods: {
                 associate: function (models) {
+                    // Author
                     models.Note.belongsTo(models.User, {
                         as: 'author',
                         foreignKey: 'authorId'
                     });
 
-                    models.Note.belongsToMany(models.Patient, {
-                        through: {
-                            model: models.NoteReference,
-                            unique: false,
-                            scope: {
-                                objectType: 'Patient'
-                            }
-                        },
-                        as: 'patients',
-                        foreignKey: 'noteId',
-                        constraints: false
+                    // Patient
+                    models.Note.belongsTo(models.Patient, {
+                        foreignKey: 'objectId',
+                        constraints: false,
+                        as: 'patient'
                     });
                 },
             }
@@ -70,7 +68,7 @@ module.exports = function (sequelize, DataTypes) {
      */
     Note.getSaveableFields = () => {
         return ['title', 'body', 'authorId'];
-    }
+    };
 
     return Note;
 };

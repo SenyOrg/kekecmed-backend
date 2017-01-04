@@ -24,15 +24,14 @@ module.exports = {
          */
 
         // DataSets
-        var patients = [];
-        var users = [];
-        var notes = [];
-        var tasks = [];
-        var noteReferences = [];
-        var taskReferences = [];
-        var taskAssignees = [];
-        var calendars = [];
-        var events = []
+        var patients          = [];
+        var users             = [];
+        var notes             = [];
+        var tasks             = [];
+        var taskReferences    = [];
+        var taskAssignees     = [];
+        var calendars         = [];
+        var events            = [];
         var eventParticipants = [];
 
         // 10
@@ -76,15 +75,23 @@ module.exports = {
                 street: faker.address.streetAddress(),
                 no: faker.address.streetSuffix(),
                 city: faker.address.city(),
+                image: faker.image.avatar()
             });
         }
 
         // 1000
         for (var i = 0 ; i < 1000 ; i++) {
             notes.push({
-                title: faker.lorem.sentence(),
                 body: faker.lorem.sentence(),
-                authorId: faker.random.number({min: 1, max: 100})
+                authorId: faker.random.number({
+                    min: 1,
+                    max: 100
+                }),
+                objectId: faker.random.number({
+                    min: 1,
+                    max: 100
+                }),
+                objectType: 'Patient'
             });
 
             tasks.push({
@@ -110,12 +117,6 @@ module.exports = {
 
         // 10000
         for (var j = 0 ; j < 10000 ; j++) {
-            noteReferences.push({
-                noteId:  faker.random.number({min: 1, max: 1000}),
-                objectId: faker.random.number({min: 1, max: 100}),
-                objectType: 'Patient'
-            });
-
             taskReferences.push({
                 taskId:  faker.random.number({min: 1, max: 1000}),
                 objectId: faker.random.number({min: 1, max: 100}),
@@ -136,7 +137,7 @@ module.exports = {
         queryInterface.bulkInsert('Users', users).then(() => {
             queryInterface.bulkInsert('Patients', patients);
             queryInterface.bulkInsert('Notes', notes).then(() => {
-                queryInterface.bulkInsert('NoteReferences', noteReferences);
+
             });
 
             queryInterface.bulkInsert('Tasks', tasks).then(() => {

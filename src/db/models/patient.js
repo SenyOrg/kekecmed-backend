@@ -1,7 +1,6 @@
 'use strict';
 
 var ValidationError = require('../../exception/ValidationError').default;
-var Logger          = require('../../util/logger').default;
 
 /**
  * Model: Patient
@@ -74,16 +73,12 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 // Notes
-                models.Patient.belongsToMany(models.Note, {
-                    through: {
-                        model: models.NoteReference,
-                        unique: false,
-                        scope: {
-                            objectType: 'Patient'
-                        }
-                    },
+                models.Patient.hasMany(models.Note, {
                     as: 'notes',
                     foreignKey: 'objectId',
+                    scope: {
+                        objectType: 'Patient'
+                    },
                     constraints: false
                 });
 
@@ -123,7 +118,7 @@ module.exports = function (sequelize, DataTypes) {
      */
     Patient.getSaveableFields = () => {
         return null;
-    }
+    };
 
     return Patient;
 };

@@ -1,7 +1,6 @@
 'use strict';
 
 var ValidationError = require('../../exception/ValidationError').default;
-var Logger          = require('../../util/logger').default;
 
 /**
  * Model: User
@@ -63,7 +62,10 @@ module.exports = function (sequelize, DataTypes) {
             validate: {
                 isEmail: true
             }
-        }
+        },
+        image: {
+            type: DataTypes.STRING
+        },
     }, {
         /**
          * OPTIONS
@@ -120,7 +122,7 @@ module.exports = function (sequelize, DataTypes) {
      */
     User.getSaveableFields = () => {
         return null;
-    }
+    };
 
     return User;
 };
