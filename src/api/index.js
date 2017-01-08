@@ -9,6 +9,7 @@
 
 import Router from 'koa-router';
 import DB from '../db/models';
+import App from './app';
 import User from './user';
 import Note from './note';
 import Patient from './patient';
@@ -78,6 +79,7 @@ rootRouter.use(async(ctx, next) => {
 });
 
 // Apply api endpoints to the root router
+App(rootRouter, DB);
 User(rootRouter, DB);
 Note(rootRouter, DB);
 Patient(rootRouter, DB);

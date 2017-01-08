@@ -4,6 +4,7 @@
   "description": "KekecMed Backend Module",
   "main": "index.js",
   "scripts": {
+    "inotify:fix": "echo 999999 | sudo tee -a /proc/sys/fs/inotify/max_user_watches && echo 999999 | sudo tee -a /proc/sys/fs/inotify/max_queued_events && echo 999999 | sudo tee -a /proc/sys/fs/inotify/max_user_instances",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src/ -d build/",
     "build:watch": "babel -w src/ -d build/",
