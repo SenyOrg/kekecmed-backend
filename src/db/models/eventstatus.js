@@ -9,6 +9,11 @@
  */
 module.exports = function (sequelize, DataTypes) {
     var EventStatus = sequelize.define('EventStatus', {
+
+        /**
+         * Attributes
+         */
+
         title: {
             type: DataTypes.STRING,
             allowNull: false
@@ -17,6 +22,14 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
         }
     }, {
+
+        /**
+         * Options
+         */
+
+        /**
+         * Class Methods
+         */
         classMethods: {
             associate: function (models) {
                 // associations can be defined here

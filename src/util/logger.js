@@ -1,6 +1,10 @@
 import winston from 'winston';
 
-// Create logger
+/**
+ * Logger Instance
+ *
+ * @author Selcuk Kekec <skekec@kekecmed.com>
+ */
 const logger = new (winston.Logger)({
     transports: [new (winston.transports.Console)({
         level: 'silly'

@@ -9,6 +9,11 @@
  */
 module.exports = function (sequelize, DataTypes) {
     var Calendar = sequelize.define('Calendar', {
+
+        /**
+         * Attributes
+         */
+
         title: {
             type: DataTypes.STRING
         },
@@ -28,7 +33,20 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING
         }
     }, {
+        /**
+         * Options
+         */
+
+        /**
+         * Class Methods
+         */
         classMethods: {
+
+            /**
+             * Setup associations
+             *
+             * @param models
+             */
             associate: function (models) {
                 // Creator
                 models.Calendar.belongsTo(models.User, {

@@ -1,4 +1,12 @@
 'use strict';
+
+/**
+ * Model: Media
+ *
+ * @param sequelize
+ * @param DataTypes
+ * @returns {*|{}}
+ */
 module.exports = function (sequelize, DataTypes) {
     var Media = sequelize.define('Media', {
         fileName: {
@@ -29,13 +37,30 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
     }, {
+
+        /**
+         * Options
+         */
+
+        /**
+         * Class Methods
+         */
         classMethods: {
+
+            /**
+             * Setup associations
+             *
+             * @param models
+             */
             associate: function (models) {
+
+                // Creator
                 models.Media.belongsTo(models.User, {
                     as: 'creator',
                     foreignKey: 'creatorId'
                 });
 
+                // Patient
                 models.Media.belongsTo(models.Patient, {
                     as: 'patient',
                     foreignKey: 'objectId',
@@ -46,5 +71,15 @@ module.exports = function (sequelize, DataTypes) {
             }
         }
     });
+
+    /**
+     * Get saveable fields
+     *
+     * @returns {null}
+     */
+    Media.getSaveableFields = () => {
+        return null;
+    }
+
     return Media;
 };

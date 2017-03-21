@@ -13,7 +13,7 @@ var Logger          = require('../../util/logger').default;
 module.exports = function (sequelize, DataTypes) {
     var Insurance = sequelize.define('Insurance', {
         /**
-         * ATTRIBUTES
+         * Attributes
          */
 
         title: {
@@ -27,11 +27,21 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING
         }
     }, {
+
         /**
-         * OPTIONS
+         * Options
          */
 
+        /**
+         * Class Methods
+         */
         classMethods: {
+
+            /**
+             * Setup associations
+             *
+             * @param models
+             */
             associate: function (models) {
                 // Patients
                 models.Insurance.hasMany(models.Patient, {
@@ -42,6 +52,14 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
+    /**
+     * Get saveable fields
+     *
+     * @returns {null}
+     */
+    Insurance.getSaveableFields = () => {
+        return null;
+    }
 
     return Insurance;
 };

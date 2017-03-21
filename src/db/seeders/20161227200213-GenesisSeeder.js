@@ -1,5 +1,10 @@
 'use strict';
 
+/**
+ * Seeder: Genesis
+ *
+ * @type {{up: module.exports.up, down: module.exports.down}}
+ */
 module.exports = {
     up: function (queryInterface, Sequelize) {
         /*

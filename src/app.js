@@ -7,30 +7,34 @@
  * @author Selcuk Kekec <skekec@kekecmed.com>
  * @version 0.1
  */
+
+/**
+ * IMPORTS
+ */
 import 'babel-polyfill';
 import Koa from 'koa';
-import RT from 'koa-response-time';
-import Logger from 'koa-logger';
-import Parser from 'koa-bodyparser';
-import Cors from 'kcors';
-import Log from './util/logger';
+import ResponsTimeMiddleware from 'koa-response-time';
+import LoggerMiddleware from 'koa-logger';
+import BodyParserMiddleware from 'koa-bodyparser';
+import CorsMiddleware from 'kcors';
+import JsonMiddleware from 'koa-json';
+import CompressMiddleware from 'koa-compress';
+import Logger from './util/logger';
 import Api from './api';
-import JSON from 'koa-json';
-import Compress from 'koa-compress';
 
 // Create Koa instance
 const app = new Koa();
 
 // Prepare app context
-Log.info("KekecMed - Booting...");
-app.context.log = Log;
+Logger.info("KekecMed - Booting...");
+app.context.log = Logger;
 
 // Register middleware
-app.use(RT());
-app.use(Logger());
-app.use(Parser());
-app.use(JSON());
-app.use(Cors());
+app.use(ResponsTimeMiddleware());
+app.use(LoggerMiddleware());
+app.use(BodyParserMiddleware());
+app.use(JsonMiddleware());
+app.use(CorsMiddleware());
 
 /**
  * @todo: Compression should be enabled in production only - Implement a valid configuration management first

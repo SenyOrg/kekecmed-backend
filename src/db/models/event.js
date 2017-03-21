@@ -1,6 +1,19 @@
 'use strict';
+
+/**
+ * Model: Event
+ *
+ * @param sequelize
+ * @param DataTypes
+ * @returns {*|{}}
+ */
 module.exports = function (sequelize, DataTypes) {
     var Event = sequelize.define('Event', {
+
+        /**
+         * Attributes
+         */
+
         title: {
             type: DataTypes.STRING,
             allowNull: false
@@ -37,7 +50,21 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         }
     }, {
+
+        /**
+         * Options
+         */
+
+        /**
+         * Class Methods
+         */
         classMethods: {
+
+            /**
+             * Setup associations
+             *
+             * @param models
+             */
             associate: function (models) {
                 // Calendar
                 models.Event.belongsTo(models.Calendar, {

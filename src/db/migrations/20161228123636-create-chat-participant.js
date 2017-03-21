@@ -1,5 +1,20 @@
 'use strict';
+
+/**
+ * Migration: ChatParticipants
+ *
+ * @type {{up: module.exports.up, down: module.exports.down}}
+ * @author Selcuk Kekec <skekec@kekecmed.com>
+ */
 module.exports = {
+
+    /**
+     * Up
+     *
+     * @param queryInterface
+     * @param Sequelize
+     * @returns {*}
+     */
     up: function (queryInterface, Sequelize) {
         return queryInterface.createTable('ChatParticipants', {
             id: {
@@ -33,6 +48,14 @@ module.exports = {
             }
         });
     },
+
+    /**
+     * Down
+     *
+     * @param queryInterface
+     * @param Sequelize
+     * @returns {*}
+     */
     down: function (queryInterface, Sequelize) {
         return queryInterface.dropTable('ChatParticipants');
     }

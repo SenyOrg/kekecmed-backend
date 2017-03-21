@@ -42,6 +42,12 @@ module.exports = function (sequelize, DataTypes) {
              *
              */
             classMethods: {
+
+                /**
+                 * Setup associations
+                 *
+                 * @param models
+                 */
                 associate: function (models) {
                     // Author
                     models.Note.belongsTo(models.User, {

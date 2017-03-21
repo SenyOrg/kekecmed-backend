@@ -1,6 +1,19 @@
 'use strict';
+
+/**
+ * Consultation
+ *
+ * @param sequelize
+ * @param DataTypes
+ * @returns {*|{}}
+ */
 module.exports = function (sequelize, DataTypes) {
     var Consultation = sequelize.define('Consultation', {
+
+        /**
+         * Attributes
+         */
+
         eventId: {
             type: DataTypes.INTEGER,
         },
@@ -18,7 +31,21 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.TEXT
         }
     }, {
+
+        /**
+         * Options
+         */
+
+        /**
+         * Class Methods
+         */
         classMethods: {
+
+            /**
+             * Setup associations
+             *
+             * @param models
+             */
             associate: function (models) {
                 // Patient
                 models.Consultation.belongsTo(models.Patient, {
@@ -34,5 +61,15 @@ module.exports = function (sequelize, DataTypes) {
             }
         }
     });
+
+    /**
+     * Get saveable fields
+     *
+     * @returns {null}
+     */
+    Consultation.getSaveableFields = () => {
+        return null;
+    }
+
     return Consultation;
 };

@@ -1,12 +1,39 @@
 'use strict';
+
+/**
+ * Model: Chats
+ *
+ * @param sequelize
+ * @param DataTypes
+ * @returns {*|{}}
+ */
 module.exports = function (sequelize, DataTypes) {
     var Chat = sequelize.define('Chat', {
+
+        /**
+         * Attributes
+         */
+
         title: {
             type: DataTypes.STRING
         },
 
     }, {
+
+        /**
+         * Options
+         */
+
+        /**
+         * Class Methods
+         */
         classMethods: {
+
+            /**
+             * Setup associations
+             *
+             * @param models
+             */
             associate: function (models) {
                 // Participants
                 models.Chat.belongsToMany(models.User, {
@@ -25,5 +52,15 @@ module.exports = function (sequelize, DataTypes) {
             }
         }
     });
+
+    /**
+     * Get saveable fields
+     *
+     * @returns {null}
+     */
+    Chat.getSaveableFields = () => {
+        return null;
+    }
+
     return Chat;
 };

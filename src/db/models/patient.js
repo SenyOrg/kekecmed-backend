@@ -11,6 +11,11 @@ var ValidationError = require('../../exception/ValidationError').default;
  */
 module.exports = function (sequelize, DataTypes) {
     var Patient = sequelize.define('Patient', {
+
+        /**
+         * Attributes
+         */
+
         firstName: {
             type: DataTypes.STRING,
             allowNull: false
@@ -70,7 +75,17 @@ module.exports = function (sequelize, DataTypes) {
         /**
          * OPTIONS
          */
+
+        /**
+         * Class Methods
+         */
         classMethods: {
+
+            /**
+             * Setup associations
+             *
+             * @param models
+             */
             associate: function (models) {
                 // Notes
                 models.Patient.hasMany(models.Note, {

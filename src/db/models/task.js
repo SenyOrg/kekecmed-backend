@@ -1,6 +1,11 @@
 'use strict';
 module.exports = function (sequelize, DataTypes) {
     var Task = sequelize.define('Task', {
+
+        /**
+         * Attributes
+         */
+
         title: {
             type: DataTypes.STRING,
             allowNull: false
@@ -21,7 +26,20 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
         },
     }, {
+        /**
+         * Options
+         */
+
+        /**
+         * Class Methods
+         */
         classMethods: {
+
+            /**
+             * Setup associations
+             *
+             * @param models
+             */
             associate: function (models) {
                 // Creator
                 models.Task.belongsTo(models.User, {
@@ -62,6 +80,11 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
+    /**
+     * Get saveable fields
+     *
+     * @returns {null}
+     */
     Task.getSaveableFields = () => {
         return null;
     }

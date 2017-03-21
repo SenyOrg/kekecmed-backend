@@ -71,7 +71,16 @@ module.exports = function (sequelize, DataTypes) {
          * OPTIONS
          */
 
+        /**
+         * Class Methods
+         */
         classMethods: {
+
+            /**
+             * Setup associations
+             *
+             * @param models
+             */
             associate: function (models) {
                 // Notes
                 models.User.hasMany(models.Note, {
